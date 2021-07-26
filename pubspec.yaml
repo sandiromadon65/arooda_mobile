@@ -23,14 +23,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  firebase_core: ^0.4.0+9
-  firebase_analytics: ^5.0.2
-  firebase_auth: ^0.14.0+5
-  image_picker: ^0.6.6+4
-  introduction_screen: ^2.1.0
-  intro_slider: ^3.0.2
-  # custom_switch_button: ^0.5.0
-  pin_entry_text_field: ^0.1.3
   flutter_verification_code_input:
     git:
       url: git://github.com/tiny-express/flutter_verification_code_input
@@ -39,20 +31,29 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.3
-  http: ^0.12.2
+  dropdownfield: ^1.0.3
+  email_auth: ^0.0.1+2
+  firebase_analytics: ^5.0.2
+  firebase_auth: ^0.14.0+5
+  firebase_core: ^0.4.0+9
   # if you are using latest flutter please update your flutter_svg package to ^0.18.*
   flutter_svg: ^0.19.1 # help us to use SVG in our app
-  provider: ^4.3.1 # for State management
-  dropdownfield: ^1.0.3
+  http: ^0.12.2
   image_auto_slider: ^0.0.3
+  image_picker: ^0.6.6+4
   image_slider: ^1.0.2
+  intro_slider: ^3.0.2
+  introduction_screen: ^2.1.0
   mailer: ^5.0.1
-  email_auth: ^0.0.1+2
+  # custom_switch_button: ^0.5.0
+  pin_entry_text_field: ^0.1.3
+  provider: ^4.3.1 # for State management
 
 dev_dependencies:
-  flutter_launcher_icons: "^0.8.0"
   flutter_test:
     sdk: flutter
+  flutter_launcher_icons: ^0.8.0
+  shared_preferences: ^2.0.6
 
 flutter_icons:
   ios: true
@@ -61,7 +62,6 @@ flutter_icons:
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
-
 # The following section is specific to Flutter.
 flutter:
   # The following line ensures that the Material Icons font is

@@ -8,6 +8,7 @@ import '../../../constants.dart';
 import 'package:http/http.dart' as http;
 import '../../../size_config.dart';
 import 'package:AROODA/api_example/user_model.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SignForm extends StatefulWidget {
   @override
@@ -31,7 +32,21 @@ class _SignFormState extends State<SignForm> {
   @override
   void initState() {
     super.initState();
-    requestModel = new LoginRequestModel();
+  }
+
+  _saveToken(String paramToken) async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    await sharedPreferences.setString('token', paramToken);
+  }
+
+  _saveUserId(String paramUserId) async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    await sharedPreferences.setString('user_id', paramUserId);
+  }
+
+  _saveEmail(String paramEmail) async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    await sharedPreferences.setString('email', paramEmail);
   }
 
   void addError({String error}) {
@@ -46,6 +61,36 @@ class _SignFormState extends State<SignForm> {
       setState(() {
         errors.remove(error);
       });
+  }
+
+  signIn(String email, String pass) async {
+    Map data = {'email': email, 'password': pass};
+    var response = await http
+        .post("https://arroda-api.arofah.org/v1/user/login", body: data);
+
+    if (response.statusCode == 200) {
+      var jsonResponse = json.decode(response.body);
+      var token = jsonResponse['data']['token'];
+      print(token);
+      if (jsonResponse['data']['token'] != null) {
+        setState(() {
+          isApiCallProcess = false;
+        });
+        _saveToken(token);
+        _saveEmail(emailController.text);
+
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(builder: (BuildContext context) => HomeScreen()),
+            (Route<dynamic> route) => false);
+      } else {
+        print(jsonResponse['error']);
+      }
+    } else {
+      setState(() {
+        isApiCallProcess = false;
+      });
+      print(response.body);
+    }
   }
 
   @override
@@ -72,31 +117,7 @@ class _SignFormState extends State<SignForm> {
                 setState(() {
                   isApiCallProcess = true;
                 });
-
-                APIService apiService = new APIService();
-                apiService.login(requestModel).then((value) {
-                  setState(() {
-                    isApiCallProcess = false;
-                  });
-
-                  if (value.token.isNotEmpty) {
-                    final snackBar = SnackBar(
-                      content: Text("Login Berhasil"),
-                    );
-                    var scaffoldKey;
-                    scaffoldKey.currentState.showSnackBar(snackBar);
-                  } else {
-                    final snackBar = SnackBar(
-                      content: Text(value.error),
-                    );
-                    var scaffoldKey;
-                    scaffoldKey.currentState.showSnackBar(snackBar);
-                  }
-                });
-
-                print(requestModel.toJson());
-                KeyboardUtil.hideKeyboard(context);
-                Navigator.pushNamed(context, HomeScreen.routeName);
+                signIn(emailController.text, passwordController.text);
               }
             },
           ),
