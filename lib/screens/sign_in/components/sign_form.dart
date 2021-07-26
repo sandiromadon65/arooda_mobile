@@ -39,11 +39,6 @@ class _SignFormState extends State<SignForm> {
     await sharedPreferences.setString('token', paramToken);
   }
 
-  _saveUserId(String paramUserId) async {
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    await sharedPreferences.setString('user_id', paramUserId);
-  }
-
   _saveEmail(String paramEmail) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     await sharedPreferences.setString('email', paramEmail);
