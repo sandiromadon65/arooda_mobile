@@ -4,9 +4,7 @@ import 'package:AROODA/components/form_error.dart';
 import 'package:AROODA/helper/keyboard.dart';
 import 'package:AROODA/screens/home/home_screen.dart';
 import '../../../components/default_button.dart';
-import '../../../constants.dart';
 import 'package:http/http.dart' as http;
-import '../../../size_config.dart';
 import 'package:AROODA/api_example/user_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -94,6 +92,12 @@ class _SignFormState extends State<SignForm> {
       key: _formKey,
       child: Column(
         children: [
+          Visibility(
+            child: CircularProgressIndicator(),
+            maintainAnimation: false,
+            maintainSize: false,
+            visible: isApiCallProcess,
+          ),
           buildEmailFormField(),
           SizedBox(
             height: 20,
